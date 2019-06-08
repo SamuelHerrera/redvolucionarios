@@ -1,0 +1,33 @@
+<ion-header no-border>
+    
+  <ion-toolbar>
+      <ion-buttons slot="end">
+      <ion-button (click)="modalSrv.closeModal()">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    <ion-title text-center>New conversation</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <ion-item>
+
+      <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterUser(searchTerm)" showCancelButton cancelButtonText="Custom Cancel" animated></ion-searchbar>
+
+  </ion-item>
+    <ion-item *ngFor="let u of filteredUsers" (click)="startChat(u)" class="listHover">
+
+        <ion-avatar slot="start" style="position:relative" *ngIf="u.uid !== user.uid">
+            <img [src]="u.photoURL">
+            <div *ngIf="u.presence | async as presence" style="font-size:10px">
+                <span class="onlineOffline_icon" [ngClass]="u.presence.status"></span>
+              </div>
+          </ion-avatar>
+          <ion-label item-left *ngIf="u.uid !== user.uid">
+            <h3>{{u.displayName}}</h3>
+
+        </ion-label>
+
+    </ion-item>
+</ion-content>
