@@ -1,0 +1,7 @@
+{
+  "/blog-right-sidebar": {
+    "target": "http://redjovenesxmexico.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

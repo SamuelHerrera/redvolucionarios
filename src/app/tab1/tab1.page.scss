@@ -1,0 +1,47 @@
+ion-item {
+  --background: #F5F5F5;
+}
+
+ion-card-subtitle {
+  div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .to-right {
+    margin-left: auto;
+  }
+}
+
+ion-card {
+  --background: #FFF5EE;
+
+  ion-card-content {
+    ion-button {
+      --background: #32CD32;
+    }
+  }
+
+  ion-item {
+    ion-button {
+      --background-activated: #C0C0C0;
+    }
+
+    .badges {
+      height: 20px;
+    }
+  }
+
+  .badges {
+    height: 30px;
+  }
+}
+
+ion-fab-button {
+  --background: #32CD32;
+}
+
+.filtro {
+  --background: #3CB371;
+}
