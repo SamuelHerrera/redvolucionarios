@@ -16,7 +16,7 @@ export class PresenceService {
     this.updateOnAway();
   }
 
-  
+
   getPresence(uid: string) {
     return this.db.object(`status/${uid}`).valueChanges();
   }
@@ -26,7 +26,7 @@ export class PresenceService {
   }
 
 
- async setPresence(status: string) {
+  async setPresence(status: string) {
     const user = await this.getUser();
     if (user) {
       return this.db.object(`status/${user.uid}`).update({ status, timestamp: this.timestamp });
@@ -43,7 +43,7 @@ export class PresenceService {
     );
 
     return this.afAuth.authState.pipe(
-      switchMap(user =>  user ? connection : of('offline')),
+      switchMap(user => user ? connection : of('offline')),
       tap(status => this.setPresence(status))
     );
   }
@@ -55,7 +55,7 @@ export class PresenceService {
             .update({
               status: 'offline',
               timestamp: this.timestamp
-          });
+            });
         }
       })
     );

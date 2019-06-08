@@ -39,16 +39,16 @@ export class ChatService {
       );
   }
 
-  getConversations(uid:string) {
+  getConversations(uid: string) {
     return this.afs
-      .collection<any>(this.conversationsTable, 
-      ref => ref.where('users', 'array-contains', uid)
-      .orderBy('lastUpdated', 'desc')
+      .collection<any>(this.conversationsTable,
+        ref => ref.where('users', 'array-contains', uid)
+          .orderBy('lastUpdated', 'desc')
       );
 
   }
   create(conversation) {
-    return this.afs.collection<any>(this.conversationsTable).doc(conversation.uid).set(conversation, {merge: false});
+    return this.afs.collection<any>(this.conversationsTable).doc(conversation.uid).set(conversation, { merge: false });
   }
 
   async enter(chatId) {
@@ -57,12 +57,12 @@ export class ChatService {
     if (uid) {
       const ref = this.afs.collection(this.conversationsTable).doc(chatId);
 
-      let msgToSave = {};
+      const msgToSave = {};
 
       msgToSave[uid] = {
         lastUpdated: Date.now(),
-        displayName: displayName,
-        photoURL: photoURL
+        displayName,
+        photoURL
       };
       return ref.update(msgToSave);
     }
@@ -80,15 +80,15 @@ export class ChatService {
     if (uid) {
       const ref = this.afs.collection(this.conversationsTable).doc(chatId);
 
-      let msgToSave = {
+      const msgToSave = {
         messages: firestore.FieldValue.arrayUnion(data),
         lastUpdated: Date.now()
       };
 
       msgToSave[uid] = {
         lastUpdated: Date.now(),
-        displayName: displayName,
-        photoURL: photoURL
+        displayName,
+        photoURL
       };
       return ref.update(msgToSave);
     }

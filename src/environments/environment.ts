@@ -5,12 +5,22 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'xxxxxxxxxxxxxxxxxxxxxxxx',
-    authDomain: 'xxxx.firebaseapp.com',
-    databaseURL: 'https://xxxxx.firebaseio.com',
-    projectId: 'xxxxx',
-    storageBucket: '',
-    messagingSenderId: 'xxxxxxxx'
+    apiKey: 'AIzaSyAwS3yrEMO-gWIXNX68HTemzQqLJuyyW4c',
+    authDomain: 'chatredvolucionarios.firebaseapp.com',
+    databaseURL: 'https://chatredvolucionarios.firebaseio.com',
+    projectId: 'chatredvolucionarios',
+    storageBucket: 'chatredvolucionarios.appspot.com',
+    messagingSenderId: '505009425660',
+    appId: '1:505009425660:web:698e943ebe010bf0'
+  },
+  firebaseConfig: {
+    apiKey: 'AIzaSyAwS3yrEMO-gWIXNX68HTemzQqLJuyyW4c',
+    authDomain: 'chatredvolucionarios.firebaseapp.com',
+    databaseURL: 'https://chatredvolucionarios.firebaseio.com',
+    projectId: 'chatredvolucionarios',
+    storageBucket: 'chatredvolucionarios.appspot.com',
+    messagingSenderId: '505009425660',
+    appId: '1:505009425660:web:698e943ebe010bf0'
   }
 };
 

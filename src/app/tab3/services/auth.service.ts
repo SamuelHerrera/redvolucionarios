@@ -13,7 +13,7 @@ import { UserService } from './user.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  
+
   user$: Observable<any>;
   authState: any;
 
@@ -38,14 +38,14 @@ export class AuthService {
   isLogged(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       firebase.auth().onAuthStateChanged((user: firebase.User) => {
-          if (user) {
-            resolve(true);
-          } else {
-            this.router.navigate(['/login']);
-            resolve(false);
-          }
-        }); 
+        if (user) {
+          resolve(true);
+        } else {
+          this.router.navigate(['/login']);
+          resolve(false);
+        }
       });
+    });
   }
 
   getUser() {
@@ -76,22 +76,25 @@ export class AuthService {
   }
 
   AuthLogin(provider) {
+    this.router.navigate(['tabs/tab3/chat/home']);
     return this.afAuth.auth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
-         this.updateUserData(result.user).then( res => {
-          this.router.navigate(['/home']);
-         });
-      })
+      .then((result) => {
+        this.ngZone.run(() => {
+          this.updateUserData(result.user).then(res => {
+            console.log('jkhhjvk hj bjkhb ');
+            this.router.navigate(['tabs/tab3/chat/home']);
+          });
+        });
 
-    }).catch((error) => {
-      window.alert(error)
-    })
+      }).catch((error) => {
+        // window.alert(error);
+        this.router.navigate(['tabs/tab3/chat/home']);
+      });
   }
 
   signOut() {
-    this.afAuth.auth.signOut().then ( () => {
-      window.location.href="/"
+    this.afAuth.auth.signOut().then(() => {
+      window.location.href = '/';
     });
   }
 

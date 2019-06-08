@@ -14,12 +14,12 @@ export class UserService {
 
   }
 
-  getUser(uid:string) {
+  getUser(uid: string) {
     return this.afs.collection<any>(this.usersTable).doc(uid);
   }
 
   getUsers() {
     return this.afs.collection<any>(this.usersTable);
   }
-  
+
 }
