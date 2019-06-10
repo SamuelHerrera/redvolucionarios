@@ -1,47 +1,52 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      {{ viewTitle }}
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="today()">Today</ion-button>
-    </ion-buttons>
+  <ion-toolbar color="secondary">
+    <div class="row">
+      <ion-select value="day" (ionChange)="changeMode($event)">
+        <ion-select-option value="month">Mes</ion-select-option>
+        <ion-select-option value="week">Semana</ion-select-option>
+        <ion-select-option value="day">Dia</ion-select-option>
+      </ion-select>
+      <div>{{ viewTitle }}</div>
+      <ion-buttons>
+        <ion-button (click)="today()">Hoy</ion-button>
+      </ion-buttons>
+    </div>
+
+
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-row>
-    <!-- Change the displayed calendar mode -->
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'month' ? 'primary' : 'secondary'"
-        (click)="changeMode('month')">Month</ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'week' ? 'primary' : 'secondary'"
-        (click)="changeMode('week')">Week</ion-button>
-    </ion-col>
-    <ion-col size="4">
-      <ion-button expand="block" [color]="calendar.mode == 'day' ? 'primary' : 'secondary'" (click)="changeMode('day')">
-        Day</ion-button>
-    </ion-col>
-
-    <!-- Move back one screen of the slides -->
-    <ion-col size="6" text-left>
-      <ion-button fill="clear" (click)="back()">
-        <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
-
-    <!-- Move forward one screen of the slides -->
-    <ion-col size="6" text-right>
-      <ion-button fill="clear" (click)="next()">
-        <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
-  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
-    (onEventSelected)="onEventSelected($event)" (onTitleChanged)="onViewTitleChanged($event)"
-    (onTimeSelected)="onTimeSelected($event)" startHour="6" endHour="20" step="30" startingDayWeek="1">
+  <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [locale]="calendar.locale"
+    [currentDate]="calendar.currentDate" (onEventSelected)="onEventSelected($event)"
+    [monthviewEventDetailTemplate]="template" (onTitleChanged)="onViewTitleChanged($event)" startHour="6" endHour="23"
+    step="30" startingDayWeek="1">
   </calendar>
-
 </ion-content>
+
+<ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate"
+  let-noEventsLabel="noEventsLabel">
+  <ion-list>
+    <ion-item *ngFor="let event of selectedDate.events">
+      <ion-thumbnail slot="start">
+        <img [src]="event.item.image">
+      </ion-thumbnail>
+      <ion-label>
+        <h3>{{event.item.subtitle}}</h3>
+        <p>{{event.item.title}}</p>
+        <div class="badges">
+          <ion-badge *ngFor="let badge of event.item.badges">
+            {{badge}}
+          </ion-badge>
+        </div>
+        <div>
+          <ion-button [fill]="event.item.confirmacionEvento==1?'solid':'fill'" size="small"
+            (click)="event.item.confirmacionEvento=1">Ire</ion-button>
+          <ion-button [fill]="event.item.confirmacionEvento==2?'solid':'fill'" size="small"
+            (click)="event.item.confirmacionEvento=2">No ire</ion-button>
+          <ion-button [fill]="event.item.confirmacionEvento==3?'solid':'fill'" size="small"
+            (click)="event.item.confirmacionEvento=3">Tal vez</ion-button>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ng-template>

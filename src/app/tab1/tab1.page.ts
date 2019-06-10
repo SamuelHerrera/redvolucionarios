@@ -1,6 +1,7 @@
 import { Component, OnInit, HostListener, ViewChild, TemplateRef, ElementRef } from '@angular/core';
 import { BlogService } from '../services/blog.service';
 import { Contenido } from '../services/contenido.model';
+import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-tab1',
@@ -19,10 +20,14 @@ export class Tab1Page implements OnInit {
     this.loadData(null);
   }
 
-  loadData(text: string) {
+  loadData(text: string, append = false) {
     this.loading = true;
     this.blogService.get_products(text).subscribe((contenido: Contenido[]) => {
-      this.contenido = contenido;
+      if (append) {
+        this.contenido = contenido.concat(this.contenido);
+      } else {
+        this.contenido = contenido;
+      }
       this.loading = false;
     });
   }
@@ -42,6 +47,14 @@ export class Tab1Page implements OnInit {
     if (!this.mostrarBusqueda) {
       this.loadData(null);
     }
+  }
+
+  doRefresh(event) {
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      this.loadData(null, true);
+      event.target.complete();
+    }, 2000);
   }
 
 }

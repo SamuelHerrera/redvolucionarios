@@ -1,6 +1,9 @@
-<ion-searchbar *ngIf="mostrarBusqueda" debounce="500" animated showCancelButton cancelButtonText="Cancelar" (ionChange)="onSearchChange($event)"
-  (ionCancel)="ocultarBusqueda()"></ion-searchbar>
+<ion-searchbar *ngIf="mostrarBusqueda" debounce="500" animated showCancelButton cancelButtonText="Cancelar"
+  (ionChange)="onSearchChange($event)" (ionCancel)="ocultarBusqueda()"></ion-searchbar>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-card *ngFor="let item of contenido" [ngSwitch]="item.type">
     <div *ngSwitchCase="'noticia'">
       <ion-img *ngIf="item.image" [src]="item.image"></ion-img>

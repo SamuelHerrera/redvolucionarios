@@ -10,14 +10,6 @@ import { formatDate } from '@angular/common';
 })
 export class Tab2Page implements OnInit {
 
-  event = {
-    title: '',
-    desc: '',
-    startTime: '',
-    endTime: '',
-    allDay: false
-  };
-
   minDate = new Date().toISOString();
 
   eventSource = [];
@@ -26,6 +18,7 @@ export class Tab2Page implements OnInit {
   calendar = {
     mode: 'month',
     currentDate: new Date(),
+    locale: 'es-MX'
   };
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
@@ -33,27 +26,46 @@ export class Tab2Page implements OnInit {
   constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string) { }
 
   ngOnInit() {
-    this.resetEvent();
+    this.precargarDummies();
+
   }
 
-  resetEvent() {
-    this.event = {
-      title: '',
-      desc: '',
-      startTime: new Date().toISOString(),
-      endTime: new Date().toISOString(),
-      allDay: false
-    };
+  precargarDummies() {
+    let inicio = new Date();
+    inicio.setHours(Math.floor(Math.random() * 20) + 9);
+    let fin = inicio;
+    fin.setHours(fin.getHours());
+    this.addEvent(inicio, fin);
+    for (let i = 0; i < 30; i++) {
+      inicio = new Date();
+      inicio.setDate(Math.floor(Math.random() * 30) + 1);
+      inicio.setHours(Math.floor(Math.random() * 20) + 9);
+      fin = inicio;
+      fin.setHours(fin.getHours());
+      this.addEvent(inicio, fin);
+    }
   }
-
+ 
   // Create the right event format and reload source
-  addEvent() {
+  addEvent(inicio, fin) {
     const eventCopy = {
-      title: this.event.title,
-      startTime: new Date(this.event.startTime),
-      endTime: new Date(this.event.endTime),
-      allDay: this.event.allDay,
-      desc: this.event.desc
+      title: 'Convocatoria de los Galardones RED 2017',
+      startTime: inicio,
+      endTime: fin,
+      allDay: false,
+      // tslint:disable-next-line:max-line-length
+      desc: 'La militancia y el trabajo en el partido se reconocen desde la Red Jóvenes X México. Ya está abierta la convocatoria de los Galardones RED.',
+      item: {
+        subtitle: '08 Jun 2019',
+        title: 'Asamblea Regional de la Red Jóvenes x México en Campeche',
+        image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19944490_867982273353997_7198108672596367740_o-1170x750.jpg',
+        // tslint:disable-next-line:max-line-length
+        content: 'Con rumbo a la XXII Asamblea Nacional de nuestro partido, realizamos nuestra última Asamblea Regional de la Red Jóvenes X México en el Estado',
+        url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-campeche/',
+        type: 'evento',
+        confirmacionEvento: 0,
+        badges: ['jovenes', 'CDMX', 'campeche']
+      }
     };
 
     if (eventCopy.allDay) {
@@ -66,7 +78,6 @@ export class Tab2Page implements OnInit {
 
     this.eventSource.push(eventCopy);
     this.myCal.loadEvents();
-    this.resetEvent();
   }
   // Change current month/week/day
   next() {
@@ -82,8 +93,8 @@ export class Tab2Page implements OnInit {
   }
 
   // Change between month/week/day
-  changeMode(mode) {
-    this.calendar.mode = mode;
+  changeMode(mode: CustomEvent) {
+    this.calendar.mode = mode.detail.value;
   }
 
   // Focus today
@@ -109,14 +120,6 @@ export class Tab2Page implements OnInit {
       buttons: ['OK']
     });
     alert.present();
-  }
-
-  // Time slot was clicked
-  onTimeSelected(ev) {
-    const selected = new Date(ev.selectedTime);
-    this.event.startTime = selected.toISOString();
-    selected.setHours(selected.getHours() + 1);
-    this.event.endTime = (selected.toISOString());
   }
 
 }
