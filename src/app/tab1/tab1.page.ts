@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener, ViewChild, TemplateRef, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../services/blog.service';
 import { Contenido } from '../services/contenido.model';
-import { IfStmt } from '@angular/compiler';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 @Component({
   selector: 'app-tab1',
@@ -14,7 +14,7 @@ export class Tab1Page implements OnInit {
   mostrarBusqueda = false;
   contenido: Contenido[] = [];
 
-  constructor(private blogService: BlogService) { }
+  constructor(private blogService: BlogService, private socialSharing: SocialSharing) { }
 
   ngOnInit(): void {
     this.loadData(null);
@@ -47,6 +47,24 @@ export class Tab1Page implements OnInit {
     if (!this.mostrarBusqueda) {
       this.loadData(null);
     }
+  }
+
+  shareOnFacebook(contenido: Contenido) {
+    this.socialSharing.shareViaFacebook(contenido.title, contenido.image).then(response => {
+      console.log(response);
+    }).catch((error) => { console.log(error); });
+  }
+
+  shareOnTwitter(contenido: Contenido) {
+    this.socialSharing.shareVia(contenido.title, contenido.image).then(response => {
+      console.log(response);
+    }).catch((error) => { console.log(error); });
+  }
+
+  shareOnInstagram(contenido: Contenido) {
+    this.socialSharing.shareViaWhatsApp(contenido.title, contenido.image).then(response => {
+      console.log(response);
+    }).catch((error) => { console.log(error); });
   }
 
   doRefresh(event) {
