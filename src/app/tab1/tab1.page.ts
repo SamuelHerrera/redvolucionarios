@@ -22,7 +22,7 @@ export class Tab1Page implements OnInit {
 
   loadData(text: string, append = false) {
     this.loading = true;
-    this.blogService.get_products(text).subscribe((contenido: Contenido[]) => {
+    this.blogService.get_contenido(text).subscribe((contenido: Contenido[]) => {
       if (append) {
         this.contenido = contenido.concat(this.contenido);
       } else {

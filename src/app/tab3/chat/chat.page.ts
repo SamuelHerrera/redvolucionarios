@@ -15,10 +15,10 @@ export class ChatPage implements OnInit {
   @ViewChild(IonContent) content: IonContent;
 
   chatId: string;
-  user_input: string = '';
+  userInput = '';
   me: any;
   otherUid: string;
-  user_presence: any;
+  userPresence: any;
 
   chatData: any;
 
@@ -40,16 +40,17 @@ export class ChatPage implements OnInit {
     this.chatId = chatId;
     this.auth.getUser().then(user => {
       this.me = user;
-        this.chatSrv.getConversationRef(this.chatId)
-        .valueChanges().subscribe( res => {
+      this.chatSrv.getConversationRef(this.chatId)
+        .valueChanges().subscribe((res: any) => {
           this.chatData = res;
-          let index = res['users'].indexOf(this.me.uid);
-          res['users'].splice(index, 1);
-          this.otherUid = res['users'][0];
-          this.user_presence = this.presenceSrv.getPresence(this.otherUid);
+          const index = res.users.indexOf(this.me.uid);
+          res.users.splice(index, 1);
+          this.otherUid = res.users[0];
+          this.userPresence = this.presenceSrv.getPresence(this.otherUid);
+          console.log(this.otherUid , this.userPresence);
           this.scrollToBottom();
         });
-        this.chatSrv.enter(this.chatId);
+      this.chatSrv.enter(this.chatId);
     });
   }
 
@@ -60,15 +61,15 @@ export class ChatPage implements OnInit {
 
   submit() {
 
-    if (this.user_input.length > 0) {
+    if (this.userInput.length > 0) {
       this.sending = true;
-      this.chatSrv.sendMessage(this.chatId, this.user_input).then ( () => {
+      this.chatSrv.sendMessage(this.chatId, this.userInput).then(() => {
         this.sending = false;
         this.chatSrv.enter(this.chatId);
         this.scrollToBottom();
       });
-      
-      this.user_input = '';
+
+      this.userInput = '';
     }
 
   }
@@ -82,7 +83,7 @@ export class ChatPage implements OnInit {
       if (this.content.scrollToBottom()) {
         this.content.scrollToBottom();
       }
-    }, 1000)
+    }, 1000);
   }
 
 }

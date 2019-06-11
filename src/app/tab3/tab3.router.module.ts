@@ -21,24 +21,6 @@ const routes: Routes = [
         loadChildren: './chat/chat.module#ChatPageModule',
       },
       {
-        path: 'login',
-        children: [
-          {
-            path: '',
-            loadChildren: './login/login.module#LoginPageModule'
-          }
-        ]
-      },
-      {
-        path: 'users-list',
-        children: [
-          {
-            path: '',
-            loadChildren: './users-list/users-list.module#UsersListPageModule'
-          }
-        ]
-      },
-      {
         path: 'settings',
         children: [
           {
@@ -51,7 +33,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'chat/login',
+    redirectTo: 'chat/home',
     pathMatch: 'full'
   }
 ];

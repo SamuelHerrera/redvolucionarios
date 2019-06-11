@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, Inject, LOCALE_ID } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { formatDate } from '@angular/common';
+import { BlogService } from '../services/blog.service';
+import { Contenido } from '../services/contenido.model';
 
 @Component({
   selector: 'app-tab2',
@@ -23,7 +25,7 @@ export class Tab2Page implements OnInit {
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
-  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string) { }
+  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService) { }
 
   ngOnInit() {
     this.precargarDummies();
@@ -31,41 +33,28 @@ export class Tab2Page implements OnInit {
   }
 
   precargarDummies() {
-    let inicio = new Date();
-    inicio.setHours(Math.floor(Math.random() * 20) + 9);
-    let fin = inicio;
-    fin.setHours(fin.getHours());
-    this.addEvent(inicio, fin);
-    for (let i = 0; i < 30; i++) {
-      inicio = new Date();
-      inicio.setDate(Math.floor(Math.random() * 30) + 1);
-      inicio.setHours(Math.floor(Math.random() * 20) + 9);
-      fin = inicio;
-      fin.setHours(fin.getHours());
-      this.addEvent(inicio, fin);
-    }
+    this.blogService.get_eventos().subscribe((eventos: Contenido[]) => {
+      if (eventos) {
+        eventos.forEach((evento: Contenido) => {
+          this.addEvent(evento);
+        });
+      }
+    });
   }
- 
+
   // Create the right event format and reload source
-  addEvent(inicio, fin) {
+  addEvent(evento: Contenido) {
+    console.log(evento);
+    const auxTime = evento.inicio;
+    auxTime.setHours(evento.inicio.getHours() + 1);
     const eventCopy = {
       title: 'Convocatoria de los Galardones RED 2017',
-      startTime: inicio,
-      endTime: fin,
+      startTime: evento.inicio,
+      endTime: evento.fin ? evento.fin : auxTime,
       allDay: false,
       // tslint:disable-next-line:max-line-length
       desc: 'La militancia y el trabajo en el partido se reconocen desde la Red Jóvenes X México. Ya está abierta la convocatoria de los Galardones RED.',
-      item: {
-        subtitle: '08 Jun 2019',
-        title: 'Asamblea Regional de la Red Jóvenes x México en Campeche',
-        image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19944490_867982273353997_7198108672596367740_o-1170x750.jpg',
-        // tslint:disable-next-line:max-line-length
-        content: 'Con rumbo a la XXII Asamblea Nacional de nuestro partido, realizamos nuestra última Asamblea Regional de la Red Jóvenes X México en el Estado',
-        url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-campeche/',
-        type: 'evento',
-        confirmacionEvento: 0,
-        badges: ['jovenes', 'CDMX', 'campeche']
-      }
+      item: evento
     };
 
     if (eventCopy.allDay) {
@@ -116,8 +105,8 @@ export class Tab2Page implements OnInit {
     const alert = await this.alertCtrl.create({
       header: event.title,
       subHeader: event.desc,
-      message: 'From: ' + start + '<br><br>To: ' + end,
-      buttons: ['OK']
+      message: 'Inicia: ' + start + '<br><br>Termina: ' + end,
+      buttons: ['Cerrar']
     });
     alert.present();
   }

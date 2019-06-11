@@ -18,7 +18,9 @@ export class BlogService {
       url: 'http://redjovenesxmexico.com/convocatoria-de-los-galardones-red-2017/',
       type: 'noticia',
       confirmacionEvento: 0,
-      badges: ['internet', 'yucatan', 'fashion']
+      badges: ['internet', 'yucatan', 'fashion'],
+      inicio: null,
+      fin: null
     }, {
       subtitle: '08 Jun 2019',
       title: 'Asamblea Regional de la Red Jóvenes x México en Campeche',
@@ -28,7 +30,9 @@ export class BlogService {
       url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-campeche/',
       type: 'evento',
       confirmacionEvento: 0,
-      badges: ['jovenes', 'CDMX', 'campeche']
+      badges: ['jovenes', 'CDMX', 'campeche'],
+      inicio: new Date(),
+      fin: null
     }, {
       subtitle: '08 Jun 2019',
       title: 'Asamblea Regional de la Red Jóvenes x México en Puebla',
@@ -38,13 +42,15 @@ export class BlogService {
       url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-puebla/',
       type: 'noticia',
       confirmacionEvento: 0,
-      badges: ['regional', 'asamblea']
+      badges: ['regional', 'asamblea'],
+      inicio: null,
+      fin: null
     }
   ];
 
   constructor(private httpClient: HttpClient) { }
 
-  public get_products(text: string) {
+  public get_contenido(text: string) {
     return new Observable(observer => {
       setTimeout(() => {
         if (text) {
@@ -56,6 +62,15 @@ export class BlogService {
         }
       }, 1000);
     });
+  }
 
+  public get_eventos() {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(this.noticias.filter((noticia) => {
+          return noticia.type === 'evento';
+        }));
+      }, 1000);
+    });
   }
 }

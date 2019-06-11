@@ -16,6 +16,7 @@ export class AuthService {
 
   user$: Observable<any>;
   authState: any;
+  windowRef: any;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -65,6 +66,21 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
+  signup(phone: string, appVerifier: any) {
+    this.windowRef = this.windowReference();
+    this.windowRef.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+      size: 'invisible'
+    });
+    this.afAuth.auth
+      .signInWithPhoneNumber(phone, appVerifier)
+      .then(value => {
+        console.log('Success!', value);
+      })
+      .catch(err => {
+        console.log('Something went wrong:', err.message);
+      });
+  }
+
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider());
   }
@@ -76,26 +92,27 @@ export class AuthService {
   }
 
   AuthLogin(provider) {
-    this.router.navigate(['tabs/tab3/chat/home']);
     return this.afAuth.auth.signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
           this.updateUserData(result.user).then(res => {
-            console.log('jkhhjvk hj bjkhb ');
             this.router.navigate(['tabs/tab3/chat/home']);
           });
         });
 
       }).catch((error) => {
-        // window.alert(error);
-        this.router.navigate(['tabs/tab3/chat/home']);
+        window.alert(error);
       });
   }
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
-      window.location.href = '/';
+      this.router.navigate(['tabs/tab1']);
     });
+  }
+
+  windowReference() {
+    return window;
   }
 
 }

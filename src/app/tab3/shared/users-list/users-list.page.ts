@@ -39,6 +39,8 @@ export class UsersListPage implements OnInit {
         const presence = this.presence.getPresence(id);
 
         return { id, presence, ...dataT };
+      }).filter(action => {
+        return action.id !== this.user.uid;
       });
       this.filteredUsers = this.user$;
     });
@@ -85,7 +87,7 @@ export class UsersListPage implements OnInit {
 
   private redirectToConversation(cid) {
     this.menuCtrl.close();
-    this.router.navigate(['chat', cid]);
+    this.router.navigate(['tabs/tab3/chat/chat', cid]);
     this.modalSrv.closeModal();
   }
 

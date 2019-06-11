@@ -7,4 +7,6 @@ export class Contenido {
     type: string;
     confirmacionEvento: number;
     badges: string[];
+    inicio: Date;
+    fin: Date;
 }

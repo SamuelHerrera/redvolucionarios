@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 
 import { Platform, MenuController } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Router } from '@angular/router';
 
 import { AuthService } from './services/auth.service';
@@ -26,8 +24,6 @@ export class Tab3Page {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private router: Router,
     private auth: AuthService,
     private menuCtrl: MenuController,
@@ -40,8 +36,6 @@ export class Tab3Page {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
       this.loadAll();
     });
   }
@@ -57,7 +51,7 @@ export class Tab3Page {
 
   showChat(chat) {
     this.menuCtrl.toggle();
-    this.router.navigate(['chat', chat.id]);
+    this.router.navigate(['tabs/tab3/chat/chat', chat.id]);
   }
 
   openUsersList() {
@@ -80,18 +74,12 @@ export class Tab3Page {
           this.loading = false;
           return { id, otherUid, presence, ...dataT };
         });
-
       });
 
   }
 
-  goSettings() {
-    this.router.navigate(['tabs/tab3/chat/settings']);
-  }
-
-  logout() {
-    this.presence.setPresence('offline');
-    this.auth.signOut();
+  loginWithGoogle() {
+    this.auth.GoogleAuth();
   }
 
 }

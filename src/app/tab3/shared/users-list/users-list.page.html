@@ -16,7 +16,7 @@
       <ion-searchbar [(ngModel)]="searchTerm" (ionChange)="filterUser(searchTerm)" showCancelButton cancelButtonText="Custom Cancel" animated></ion-searchbar>
 
   </ion-item>
-    <ion-item *ngFor="let u of filteredUsers" (click)="startChat(u)" class="listHover">
+    <ion-item *ngFor="let u of filteredUsers"  (click)="startChat(u)" class="listHover">
 
         <ion-avatar slot="start" style="position:relative" *ngIf="u.uid !== user.uid">
             <img [src]="u.photoURL">
