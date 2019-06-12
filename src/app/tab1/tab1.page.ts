@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { BlogService } from '../services/blog.service';
 import { Contenido } from '../services/contenido.model';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { Plugins } from '@capacitor/core';
+const { Share } = Plugins;
 
 @Component({
   selector: 'app-tab1',
@@ -49,10 +51,16 @@ export class Tab1Page implements OnInit {
     }
   }
 
-  shareOnFacebook(contenido: Contenido) {
-    this.socialSharing.shareViaFacebook(contenido.title, contenido.image).then(response => {
-      console.log(response);
-    }).catch((error) => { console.log(error); });
+  async shareOnFacebook(contenido: Contenido) {
+    // this.socialSharing.shareViaFacebook(contenido.title, contenido.image).then(response => {
+    //   console.log(response);
+    // }).catch((error) => { console.log(error); });
+    const shareRet = await Share.share({
+      title: 'See cool stuff',
+      text: 'Really awesome thing you need to see right meow',
+      url: 'http://ionicframework.com/',
+      dialogTitle: 'Share with buddies'
+    });
   }
 
   shareOnTwitter(contenido: Contenido) {
