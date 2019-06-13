@@ -30,12 +30,14 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.app.loadAll();
-    this.auth.getUser().then(user => {
+    this.auth.getUser().subscribe(user => {
       this.user = user;
+      console.log(this.user);
     });
   }
 
   openUsersList() {
+    console.log();
     this.modalSrv.presentModal(UsersListPage, { user: this.user });
   }
 

@@ -40,11 +40,14 @@ export class Tab3Page {
     });
   }
 
-  async loadAll() {
-    this.auth.getUser().then(user => {
+  loadAll() {
+    this.auth.getUser().subscribe(user => {
       this.user = user;
+      console.log(user);
       if (user) {
         this.loadConversations(this.user);
+      } else {
+        this.chat$ = [];
       }
     });
   }
@@ -79,7 +82,13 @@ export class Tab3Page {
   }
 
   loginWithGoogle() {
-    this.auth.GoogleAuth();
+    this.auth.GoogleAuth().then(() => {
+      console.log('logged in!');
+    });
+  }
+
+  logout() {
+    this.auth.signOut();
   }
 
 }

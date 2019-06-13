@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   getUser() {
-    return this.user$.pipe(first()).toPromise();
+    return this.user$;
   }
 
   private updateUserData({ uid, email, displayName, photoURL }) {

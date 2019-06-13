@@ -38,19 +38,21 @@ export class ChatPage implements OnInit {
   ngOnInit() {
     const chatId = this.route.snapshot.paramMap.get('id');
     this.chatId = chatId;
-    this.auth.getUser().then(user => {
+    this.auth.getUser().subscribe(user => {
       this.me = user;
-      this.chatSrv.getConversationRef(this.chatId)
-        .valueChanges().subscribe((res: any) => {
-          this.chatData = res;
-          const index = res.users.indexOf(this.me.uid);
-          res.users.splice(index, 1);
-          this.otherUid = res.users[0];
-          this.userPresence = this.presenceSrv.getPresence(this.otherUid);
-          console.log(this.otherUid , this.userPresence);
-          this.scrollToBottom();
-        });
-      this.chatSrv.enter(this.chatId);
+      if (user) {
+        this.chatSrv.getConversationRef(this.chatId)
+          .valueChanges().subscribe((res: any) => {
+            this.chatData = res;
+            const index = res.users.indexOf(this.me.uid);
+            res.users.splice(index, 1);
+            this.otherUid = res.users[0];
+            this.userPresence = this.presenceSrv.getPresence(this.otherUid);
+            console.log(this.otherUid, this.userPresence);
+            this.scrollToBottom();
+          });
+        this.chatSrv.enter(this.chatId);
+      }
     });
   }
 

@@ -52,7 +52,7 @@ export class ChatService {
   }
 
   async enter(chatId) {
-    const { uid, displayName, photoURL } = await this.auth.getUser();
+    const { uid, displayName, photoURL } = await this.auth.getUser().toPromise();
 
     if (uid) {
       const ref = this.afs.collection(this.conversationsTable).doc(chatId);
@@ -69,7 +69,7 @@ export class ChatService {
   }
 
   async sendMessage(chatId, content) {
-    const { uid, displayName, photoURL } = await this.auth.getUser();
+    const { uid, displayName, photoURL } = await this.auth.getUser().toPromise();
 
     const data = {
       uid,
