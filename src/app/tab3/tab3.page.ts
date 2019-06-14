@@ -42,8 +42,7 @@ export class Tab3Page {
 
   loadAll() {
     this.auth.getUser().subscribe(user => {
-      this.user = user;
-      console.log(user);
+      this.user = user; 
       if (user) {
         this.loadConversations(this.user);
       } else {

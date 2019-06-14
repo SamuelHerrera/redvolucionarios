@@ -3,7 +3,7 @@
     <ion-header no-border>
       <ion-toolbar>
         <ion-list lines="none">
-          <ion-item>
+          <ion-item *ngIf="user">
             <ion-avatar slot="start">
               <img [src]="user?.photoURL || spinner" style="width:120px">
             </ion-avatar>
@@ -12,23 +12,23 @@
                 {{user?.displayName}}
               </p>
             </ion-label>
+            <ion-button shape="round" color="light" (click)="logout()">
+              <ion-icon name="log-out"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item *ngIf="!user">
+            <ion-label item-right text-right>
+              <!-- <ion-button shape="round" color="light" (click)="openUsersList()">+ Conversation</ion-button> -->
+              <ion-button *ngIf="!user" shape="round" color="light" (click)="loginWithGoogle()">
+                <ion-icon name="logo-google"></ion-icon>
+              </ion-button>
+            </ion-label>
           </ion-item>
         </ion-list>
       </ion-toolbar>
     </ion-header>
     <ion-content style="--background: #F0F4F8">
       <ion-list no-padding>
-        <ion-item>
-          <ion-label item-right text-right>
-            <ion-button shape="round" color="light" (click)="openUsersList()">+ Conversation</ion-button>
-            <ion-button shape="round" color="light" (click)="loginWithGoogle()">
-              <ion-icon name="logo-google"></ion-icon>
-            </ion-button>
-            <ion-button shape="round" color="light" (click)="logout()">
-              <ion-icon name="log-out"></ion-icon>
-            </ion-button>
-          </ion-label>
-        </ion-item>
         <div *ngIf="chat$">
           <ion-item *ngFor="let chat of chat$" (click)="showChat(chat)" class="listHover"
             [ngClass]="chat.lastUpdated>chat[user.uid].lastUpdated ? 'unread' : ''">
@@ -47,11 +47,8 @@
             </ion-label>
           </ion-item>
         </div>
-
       </ion-list>
-
     </ion-content>
   </ion-menu>
-
   <ion-router-outlet main></ion-router-outlet>
 </ion-split-pane>

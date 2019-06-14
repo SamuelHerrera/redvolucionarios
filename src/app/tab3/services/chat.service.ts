@@ -68,15 +68,13 @@ export class ChatService {
     }
   }
 
-  async sendMessage(chatId, content) {
-    const { uid, displayName, photoURL } = await this.auth.getUser().toPromise();
-
+  async sendMessage(chatId, content, uid, displayName, photoURL) {
     const data = {
       uid,
       content,
       createdAt: Date.now()
     };
-
+    
     if (uid) {
       const ref = this.afs.collection(this.conversationsTable).doc(chatId);
 

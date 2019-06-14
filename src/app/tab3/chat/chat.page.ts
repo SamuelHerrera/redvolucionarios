@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuController, IonContent } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ChatService } from '../services/chat.service';
 import { AuthService } from '../services/auth.service';
 import { PresenceService } from '../services/presence.service';
+import { UsersListPage } from '../shared/users-list/users-list.page';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-chat',
@@ -28,7 +30,9 @@ export class ChatPage implements OnInit {
   formatHour = 'HH:mm:ss';
 
   constructor(
+    private modalSrv: ModalService,
     private menuCtrl: MenuController,
+    private router: Router,
     private route: ActivatedRoute,
     public chatSrv: ChatService,
     public auth: AuthService,
@@ -61,15 +65,25 @@ export class ChatPage implements OnInit {
     this.menuCtrl.enable(true, 'start');
   }
 
-  submit() {
+  openUsersList() {
+    this.modalSrv.presentModal(UsersListPage, { user: this.me });
+  }
 
+  submit() {
+    console.log(this.userInput);
+    if (!this.me) {
+      this.router.navigate(['/tabs/tab3/chat/home']);
+      return;
+    }
     if (this.userInput.length > 0) {
       this.sending = true;
-      this.chatSrv.sendMessage(this.chatId, this.userInput).then(() => {
-        this.sending = false;
-        this.chatSrv.enter(this.chatId);
-        this.scrollToBottom();
-      });
+      console.log(this.me);
+      this.chatSrv.sendMessage(this.chatId, this.userInput,
+        this.me.uid, this.me.displayName, this.me.photoURL).then(() => {
+          this.sending = false;
+          this.chatSrv.enter(this.chatId);
+          this.scrollToBottom();
+        }).catch(error => console.log(error));
 
       this.userInput = '';
     }
@@ -82,10 +96,15 @@ export class ChatPage implements OnInit {
 
   scrollToBottom() {
     setTimeout(() => {
-      if (this.content.scrollToBottom()) {
+      if (this.content && this.content.scrollToBottom()) {
+        console.log(this.content);
         this.content.scrollToBottom();
       }
     }, 1000);
+  }
+
+  getBackgroundUrl() {
+    return "url('/assets/images/bg-2.jpg')";
   }
 
 }

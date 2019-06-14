@@ -41,4 +41,8 @@ export class HomePage implements OnInit {
     this.modalSrv.presentModal(UsersListPage, { user: this.user });
   }
 
+  getBackgroundUrl() {
+    return "url('/assets/images/bg-2.jpg')";
+  }
+
 }

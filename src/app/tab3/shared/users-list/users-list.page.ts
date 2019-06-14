@@ -40,7 +40,12 @@ export class UsersListPage implements OnInit {
 
         return { id, presence, ...dataT };
       }).filter(action => {
-        return action.id !== this.user.uid;
+        if (this.user) {
+          return action.id !== this.user.uid;
+        } else {
+          return false;
+        }
+
       });
       this.filteredUsers = this.user$;
     });
