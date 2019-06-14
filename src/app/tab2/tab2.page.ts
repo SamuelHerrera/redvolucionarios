@@ -4,6 +4,7 @@ import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { formatDate } from '@angular/common';
 import { BlogService } from '../services/blog.service';
 import { Contenido } from '../services/contenido.model';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -25,7 +26,7 @@ export class Tab2Page implements OnInit {
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
-  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService) { }
+  constructor(private launchNavigator: LaunchNavigator, private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService) { }
 
   ngOnInit() {
     this.precargarDummies();
@@ -48,12 +49,12 @@ export class Tab2Page implements OnInit {
     const auxTime = evento.inicio;
     auxTime.setHours(evento.inicio.getHours() + 1);
     const eventCopy = {
-      title: 'Convocatoria de los Galardones RED 2017',
+      title: evento.title,
       startTime: evento.inicio,
       endTime: evento.fin ? evento.fin : auxTime,
       allDay: false,
       // tslint:disable-next-line:max-line-length
-      desc: 'La militancia y el trabajo en el partido se reconocen desde la Red Jóvenes X México. Ya está abierta la convocatoria de los Galardones RED.',
+      desc: evento.content,
       item: evento
     };
 
@@ -106,9 +107,37 @@ export class Tab2Page implements OnInit {
       header: event.title,
       subHeader: event.desc,
       message: 'Inicia: ' + start + '<br><br>Termina: ' + end,
-      buttons: ['Cerrar']
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Mapa',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.openEventInMaps();
+          }
+        }
+      ]
     });
     alert.present();
   }
 
+
+  openEventInMaps() {
+    let options: LaunchNavigatorOptions = {
+      start: 'Campeche, MX',
+      app: this.launchNavigator.APP.USER_SELECT
+    }
+
+    this.launchNavigator.navigate('Campeche, MX', options)
+      .then(
+        success => console.log('Launched navigator'),
+        error => console.log('Error launching navigator', error)
+      );
+  }
 }

@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Inject, LOCALE_ID } from '@angular/core';
 import { BlogService } from '../services/blog.service';
 import { Contenido } from '../services/contenido.model';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Plugins } from '@capacitor/core';
+import { formatDate } from '@angular/common';
+import { AlertController } from '@ionic/angular';
+import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+
 const { Share } = Plugins;
 
 @Component({
@@ -12,17 +16,31 @@ const { Share } = Plugins;
 })
 export class Tab1Page implements OnInit {
 
+  private _searchText: string;
+
+  get item(): any {
+    return this._searchText;
+  }
+
+  @Input()
+  set searchText(val: string) {
+    if (val) {
+      console.log(val);
+      this._searchText = val;
+      this.loadData(this._searchText);
+    }
+  }
+
   loading = true;
-  mostrarBusqueda = false;
   contenido: Contenido[] = [];
 
-  constructor(private blogService: BlogService, private socialSharing: SocialSharing) { }
+  constructor(private launchNavigator: LaunchNavigator, private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService, private socialSharing: SocialSharing) { }
 
   ngOnInit(): void {
     this.loadData(null);
   }
 
-  loadData(text: string, append = false) {
+  loadData(text: string, append = false, event: any = false) {
     this.loading = true;
     this.blogService.get_contenido(text).subscribe((contenido: Contenido[]) => {
       if (append) {
@@ -31,24 +49,10 @@ export class Tab1Page implements OnInit {
         this.contenido = contenido;
       }
       this.loading = false;
+      if (event) {
+        event.target.complete();
+      }
     });
-  }
-
-  onSearchChange(data) {
-    const text: string = data.detail.value;
-    this.loadData(text);
-  }
-
-  ocultarBusqueda() {
-    this.mostrarBusqueda = false;
-    this.loadData(null);
-  }
-
-  toggleBusqueda() {
-    this.mostrarBusqueda = !this.mostrarBusqueda;
-    if (!this.mostrarBusqueda) {
-      this.loadData(null);
-    }
   }
 
   async shareOnFacebook(contenido: Contenido) {
@@ -76,11 +80,53 @@ export class Tab1Page implements OnInit {
   }
 
   doRefresh(event) {
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      this.loadData(null, true);
-      event.target.complete();
-    }, 2000);
+    if (this._searchText) {
+      this.loadData(this._searchText, true, event);
+    } else {
+      this.loadData(null, true, event);
+    }
   }
 
+  // Calendar event was clicked
+  async onEventSelected(event: Contenido) {
+    // Use Angular date pipe for conversion
+    const start = formatDate(event.inicio, 'medium', this.locale);
+    const end = formatDate(event.fin, 'medium', this.locale);
+
+    const alert = await this.alertCtrl.create({
+      header: event.title,
+      subHeader: event.content,
+      message: 'Inicia: ' + start + '<br><br>Termina: ' + end,
+      buttons: [
+        {
+          text: 'Cerrar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Mapa',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.openEventInMaps();
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  openEventInMaps() {
+    let options: LaunchNavigatorOptions = {
+      start: 'London, ON',
+      app: this.launchNavigator.APP.USER_SELECT
+    }
+
+    this.launchNavigator.navigate('Campeche, MX', options)
+      .then(
+        success => console.log('Launched navigator'),
+        error => console.log('Error launching navigator', error)
+      );
+  }
 }

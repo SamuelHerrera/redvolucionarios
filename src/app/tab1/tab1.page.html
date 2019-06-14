@@ -1,5 +1,4 @@
-<ion-searchbar *ngIf="mostrarBusqueda" debounce="500" animated showCancelButton cancelButtonText="Cancelar"
-  (ionChange)="onSearchChange($event)" (ionCancel)="ocultarBusqueda()"></ion-searchbar>
+<ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
@@ -33,20 +32,20 @@
           </ion-badge>
         </div>
         <p>{{item.content}}</p>
-        <ion-button>
+        <!-- <ion-button>
           <ion-icon slot="end" name="arrow-forward"></ion-icon>
           Continuar leyendo
-        </ion-button>
+        </ion-button> -->
       </ion-card-content>
     </div>
     <div *ngSwitchCase="'evento'">
-      <ion-item>
+      <ion-item (click)=" onEventSelected(item) ">
         <ion-thumbnail slot="start">
           <img [src]="item.image">
         </ion-thumbnail>
         <ion-label>
           <h3>{{item.subtitle}}</h3>
-          <p>{{item.title}}</p>
+          <p>{{item.title}}</p>   
           <div class="badges">
             <ion-badge *ngFor="let badge of item.badges">
               {{badge}}
@@ -54,18 +53,18 @@
           </div>
           <div>
             <ion-button [fill]="item.confirmacionEvento==1?'solid':'fill'" size="small"
-              (click)="item.confirmacionEvento=1">Ire</ion-button>
+              (click)="item.confirmacionEvento=1" (click)="$event.stopPropagation();">Ire</ion-button>
             <ion-button [fill]="item.confirmacionEvento==2?'solid':'fill'" size="small"
-              (click)="item.confirmacionEvento=2">No ire</ion-button>
+              (click)="item.confirmacionEvento=2" (click)="$event.stopPropagation();">No ire</ion-button>
             <ion-button [fill]="item.confirmacionEvento==3?'solid':'fill'" size="small"
-              (click)="item.confirmacionEvento=3">Tal vez</ion-button>
+              (click)="item.confirmacionEvento=3" (click)="$event.stopPropagation();">Tal vez</ion-button>
           </div>
         </ion-label>
       </ion-item>
     </div>
   </ion-card>
 </ion-content>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+<!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed">
   <ion-fab-button>
     <ion-icon name="menu"></ion-icon>
   </ion-fab-button>
@@ -74,5 +73,4 @@
       <ion-icon name="funnel"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>
-</ion-fab>
-<ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+</ion-fab> -->

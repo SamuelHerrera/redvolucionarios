@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mi Perfil</ion-title>
+    <ion-button class="margen" slot="end" size="small" (click)="completarEntrevista()">
+      <!-- <ion-icon name="save"></ion-icon> -->
+      Saltar
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let pregunta of preguntas">
+      <ion-label style="display: none;">{{pregunta.texto}}</ion-label>
+      {{pregunta.texto}}
+      <ion-select slot="end" placeholder="Seleccionar">
+        <ion-select-option *ngFor="let opcion of pregunta.opciones" value="{{opcion.id}}">{{opcion.texto}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,34 @@
+ion-item {
+    --background: transparent;
+}
+
+ion-input {
+    --background: transparent;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    flex-wrap: wrap;
+}
+
+ion-avatar{
+    margin-top: 40px;
+}
+
+ion-item {
+    width: 70%;
+    margin-top: 20px;
+    background: #ededed;
+}
+
+ion-button {
+    margin-top: 15px;
+    --background: #2ed47a;
+}

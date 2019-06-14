@@ -1,0 +1,13 @@
+<ion-content>
+  <div class="content" [ngStyle]="{'background-image': getBackgroundUrl()}">
+      <ion-avatar>
+          <img [src]="getLogoUrl()">
+        </ion-avatar>
+      <ion-item lines="none">
+          <ion-label position="floating">Numero de afiliado</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
+        <ion-button expand="full" (click)="completarEntrevista()">Entrar</ion-button>
+  </div>
+
+</ion-content>

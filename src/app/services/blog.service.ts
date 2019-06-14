@@ -48,6 +48,43 @@ export class BlogService {
     }
   ];
 
+  private preguntas: any = [
+    {
+      id: "",
+      texto: "¿Cual es tu deporte favorito?",
+      opciones: [
+        {
+          texto: "Futbol",
+          id: ""
+        }, {
+          texto: "Basquetbol",
+          id: ""
+        }, {
+          texto: "Tenis",
+          id: ""
+        }
+      ],
+      respuestaId: ""
+    },
+    {
+      id: "",
+      texto: "¿Cual es tu deporte favorito?",
+      opciones: [
+        {
+          texto: "Futbol",
+          id: ""
+        }, {
+          texto: "Basquetbol",
+          id: ""
+        }, {
+          texto: "Tenis",
+          id: ""
+        }
+      ],
+      respuestaId: ""
+    }
+  ];
+
   constructor(private httpClient: HttpClient) { }
 
   public get_contenido(text: string) {
@@ -70,6 +107,14 @@ export class BlogService {
         observer.next(this.noticias.filter((noticia) => {
           return noticia.type === 'evento';
         }));
+      }, 1000);
+    });
+  }
+
+  public get_Preguntas(){
+    return new Observable(observer => {
+      setTimeout(() => {
+          observer.next(this.preguntas);
       }, 1000);
     });
   }

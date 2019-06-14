@@ -1,0 +1,3 @@
+<ion-searchbar debounce="500" animated showCancelButton cancelButtonText="Cancelar"
+  (ionChange)="onSearchChange($event)" (ionCancel)="ocultarBusqueda()"></ion-searchbar>
+<app-tab1 [searchText]="searchText"></app-tab1>

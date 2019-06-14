@@ -26,7 +26,7 @@
 <ng-template #template let-showEventDetail="showEventDetail" let-selectedDate="selectedDate"
   let-noEventsLabel="noEventsLabel">
   <ion-list>
-    <ion-item *ngFor="let event of selectedDate.events">
+    <ion-item *ngFor="let event of selectedDate.events" (click)=" onEventSelected(event) ">
       <ion-thumbnail slot="start">
         <img [src]="event.item.image">
       </ion-thumbnail>
@@ -40,11 +40,11 @@
         </div>
         <div>
           <ion-button [fill]="event.item.confirmacionEvento==1?'solid':'fill'" size="small"
-            (click)="event.item.confirmacionEvento=1">Ire</ion-button>
+            (click)="event.item.confirmacionEvento=1" (click)="$event.stopPropagation();">Ire</ion-button>
           <ion-button [fill]="event.item.confirmacionEvento==2?'solid':'fill'" size="small"
-            (click)="event.item.confirmacionEvento=2">No ire</ion-button>
+            (click)="event.item.confirmacionEvento=2" (click)="$event.stopPropagation();">No ire</ion-button>
           <ion-button [fill]="event.item.confirmacionEvento==3?'solid':'fill'" size="small"
-            (click)="event.item.confirmacionEvento=3">Tal vez</ion-button>
+            (click)="event.item.confirmacionEvento=3" (click)="$event.stopPropagation();">Tal vez</ion-button>
         </div>
       </ion-label>
     </ion-item>
