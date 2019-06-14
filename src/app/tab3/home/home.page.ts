@@ -37,12 +37,21 @@ export class HomePage implements OnInit {
   }
 
   openUsersList() {
-    console.log();
     this.modalSrv.presentModal(UsersListPage, { user: this.user });
+  }
+
+  loginWithGoogle() {
+    this.auth.GoogleAuth().then(() => {
+      console.log('logged in!');
+    });
   }
 
   getBackgroundUrl() {
     return "url('/assets/images/bg-2.jpg')";
+  }
+
+  logout() {
+    this.auth.signOut();
   }
 
 }

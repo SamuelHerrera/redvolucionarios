@@ -109,17 +109,19 @@ export class Tab2Page implements OnInit {
       message: 'Inicia: ' + start + '<br><br>Termina: ' + end,
       buttons: [
         {
+          text: 'Mapa',
+          cssClass: 'primary',
+          handler: () => {
+            console.log('Confirm Okay');
+            this.openEventInMaps();
+          }
+        },
+        {
           text: 'Cerrar',
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
             console.log('Confirm Cancel: blah');
-          }
-        }, {
-          text: 'Mapa',
-          handler: () => {
-            console.log('Confirm Okay');
-            this.openEventInMaps();
           }
         }
       ]

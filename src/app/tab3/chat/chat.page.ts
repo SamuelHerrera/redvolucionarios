@@ -104,7 +104,7 @@ export class ChatPage implements OnInit {
   }
 
   getBackgroundUrl() {
-    return "url('/assets/images/bg-2.jpg')";
+    return "url('/assets/images/bg-chat-3.jpg')";
   }
 
 }

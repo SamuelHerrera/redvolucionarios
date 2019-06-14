@@ -11,13 +11,13 @@
           <div>
             <div>{{item.subtitle}}</div>
             <div class="to-right">
-              <ion-button size="small" fill="clear" (click)="shareOnFacebook(item)">
+              <ion-button size="small" fill="clear" color="tertiary" (click)="shareOnFacebook(item)">
                 <ion-icon name="logo-facebook"></ion-icon>
               </ion-button>
-              <ion-button size="small" fill="clear" (click)="shareOnTwitter(item)">
+              <ion-button size="small" fill="clear" color="tertiary" (click)="shareOnTwitter(item)">
                 <ion-icon name="logo-twitter"></ion-icon>
               </ion-button>
-              <ion-button size="small" fill="clear" (click)="shareOnInstagram(item)">
+              <ion-button size="small" fill="clear" color="tertiary" (click)="shareOnInstagram(item)">
                 <ion-icon name="logo-instagram"></ion-icon>
               </ion-button>
             </div>
@@ -45,7 +45,7 @@
         </ion-thumbnail>
         <ion-label>
           <h3>{{item.subtitle}}</h3>
-          <p>{{item.title}}</p>   
+          <p>{{item.title}}</p>
           <div class="badges">
             <ion-badge *ngFor="let badge of item.badges">
               {{badge}}

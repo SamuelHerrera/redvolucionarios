@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header no-border *ngIf="user">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button>
@@ -14,9 +14,32 @@
 </ion-header>
 
 <ion-content [ngStyle]="{'background-image': getBackgroundUrl()}">
-
-  <div text-center >
-    <h3>Hola {{user?.displayName}}</h3>
+  <div text-center class="container">
+    <ion-avatar *ngIf="user">
+      <img [src]="user?.photoURL" style="width:220px">
+    </ion-avatar>
+    <div *ngIf="!user" class="container to-center">
+      <h2>Inicia sesión de las siguientes maneras:</h2>
+    </div>
+    <div class="buttons">
+      <ion-button *ngIf="!user" shape="round" color="light" (click)="loginWithGoogle()">
+        <ion-icon name="logo-google"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!user" shape="round" color="light" (click)="loginWithGoogle()">
+        <ion-icon name="logo-facebook"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!user" shape="round" color="light" (click)="loginWithGoogle()">
+        <ion-icon name="logo-twitter"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="user" shape="round" color="light" (click)="logout()">
+        <ion-icon slot="end" name="log-out"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-button>
+    </div>
+    <ion-label item-left>
+      <p *ngIf="user">Hola,</p>
+      <h2>{{user?.displayName}}</h2>
+    </ion-label>
     <!-- <ion-button shape="round" (click)="openUsersList()">Start a conversation</ion-button> -->
   </div>
 </ion-content>

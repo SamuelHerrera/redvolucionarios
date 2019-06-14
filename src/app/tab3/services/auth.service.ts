@@ -107,7 +107,7 @@ export class AuthService {
 
   signOut() {
     this.afAuth.auth.signOut().then(() => {
-      this.router.navigate(['tabs/tab1']);
+      this.router.navigate(['tabs/tab3/chat/home']);
     });
   }
 
