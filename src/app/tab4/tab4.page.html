@@ -1,10 +1,52 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>
       Mi Perfil
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Datos personales</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-avatar>
+        <img *ngIf="user" [src]="user?.photoURL">
+        <img *ngIf="!user" src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+      </ion-avatar>
+      <ion-label>{{user?.displayName}}</ion-label>
+    </ion-item>
+    <ion-item *ngFor="let detalle of detalles">
+      <ion-label position="floating">
+        <h2>
+          {{detalle.campo}}
+        </h2>
+      </ion-label>
+      <ion-input [disabled]="!detalle.editable" [value]="detalle.valor"></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Configuraciones</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let configuracion of configuraciones">
+      <ion-label>
+        <h2>
+          {{configuracion.campo}}
+        </h2>
+      </ion-label>
+      <ion-input *ngIf="configuracion.tipo=='input'" [(ngModel)]="configuracion.valor"></ion-input>
+      <ion-toggle *ngIf="configuracion.tipo=='toggle'" [(ngModel)]="configuracion.valor" slot="end"></ion-toggle>
+      <ion-select *ngIf="configuracion.tipo=='select'" multiple>
+        <ion-select-option *ngFor="let opcion of configuracion.opciones" value="{{opcion.texto}}">{{opcion.texto}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>

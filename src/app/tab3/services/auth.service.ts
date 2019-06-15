@@ -54,6 +54,8 @@ export class AuthService {
   }
 
   private updateUserData({ uid, email, displayName, photoURL }) {
+    displayName = 'Juan Perez Correa';
+    photoURL = 'https://d1nhio0ox7pgb.cloudfront.net/_img/o_collection_png/green_dark_grey/256x256/plain/user.png';
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
 
     const data = {
@@ -82,7 +84,8 @@ export class AuthService {
   }
 
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
+    // return this.AuthLogin(new auth.GoogleAuthProvider());
+    return this.registerNew();
   }
   FacebookAuth() {
     return this.AuthLogin(new auth.FacebookAuthProvider());
@@ -91,11 +94,34 @@ export class AuthService {
     return this.AuthLogin(new auth.TwitterAuthProvider());
   }
 
+  registerNew() {
+    const userName = 'UserAnon-' + (Math.floor(Math.random() * 10) + 1) + '@gmail.com';
+    return this.afAuth.auth.createUserAndRetrieveDataWithEmailAndPassword(userName, 'Devel0per').then(response => {
+      this.ngZone.run(() => {
+        console.log(response);
+        this.updateUserData(response.user).then(res => {
+          this.router.navigate(['tabs/tab3/chat/home']);
+        });
+      });
+    }).catch((error) => {
+      // window.alert(error);
+      this.afAuth.auth.signInAndRetrieveDataWithEmailAndPassword(userName, 'Devel0per').then(response => {
+        this.ngZone.run(() => {
+          console.log(response);
+          this.updateUserData(response.user).then(res => {
+            this.router.navigate(['tabs/tab3/chat/home']);
+          });
+        });
+      });
+    });
+  }
+
   AuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
           this.updateUserData(result.user).then(res => {
+            console.log(result);
             this.router.navigate(['tabs/tab3/chat/home']);
           });
         });

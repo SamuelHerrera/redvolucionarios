@@ -5,7 +5,8 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Plugins } from '@capacitor/core';
 import { formatDate } from '@angular/common';
 import { AlertController } from '@ionic/angular';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+import { Observable } from 'rxjs';
+// import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 
 const { Share } = Plugins;
 
@@ -16,7 +17,9 @@ const { Share } = Plugins;
 })
 export class Tab1Page implements OnInit {
 
+  // tslint:disable-next-line:variable-name
   private _searchText: string;
+  noticias: any;
 
   get item(): any {
     return this._searchText;
@@ -34,7 +37,8 @@ export class Tab1Page implements OnInit {
   loading = true;
   contenido: Contenido[] = [];
 
-  constructor(private launchNavigator: LaunchNavigator, private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService, private socialSharing: SocialSharing) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService, private socialSharing: SocialSharing) { }
 
   ngOnInit(): void {
     this.loadData(null);
@@ -120,15 +124,52 @@ export class Tab1Page implements OnInit {
   }
 
   openEventInMaps() {
-    let options: LaunchNavigatorOptions = {
-      start: 'London, ON',
-      app: this.launchNavigator.APP.USER_SELECT
-    }
+    // const options: LaunchNavigatorOptions = {
+    //   start: 'London, ON',
+    //   app: this.launchNavigator.APP.USER_SELECT
+    // };
 
-    this.launchNavigator.navigate('Campeche, MX', options)
-      .then(
-        success => console.log('Launched navigator'),
-        error => console.log('Error launching navigator', error)
-      );
+    // document.addEventListener('deviceready', function () {
+    //   this.launchNavigator.navigate('Campeche, MX', options)
+    //     .then(
+    //       success => console.log('Launched navigator'),
+    //       error => console.log('Error launching navigator', error)
+    //     );
+    // }, false);
+  }
+
+  public get_contenido(text: string) {
+    return new Observable(observer => {
+      setTimeout(() => {
+        if (text) {
+          observer.next(this.noticias.filter((noticia) => {
+            return noticia.title.toLowerCase().indexOf(text.toLowerCase()) > -1;
+          }));
+        } else {
+          observer.next(this.noticias);
+        }
+      }, 1000);
+    });
+  }
+
+  public get_eventos() {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(this.noticias.filter((noticia) => {
+          return noticia.type === 'evento';
+        }));
+      }, 1000);
+    });
+  }
+
+  public get_Preguntas() {
+    return new Observable(observer => {
+      setTimeout(() => {
+        observer.next(this.preguntas);
+      }, 1000);
+    });
+  }
+  preguntas(preguntas: any) {
+    throw new Error('Method not implemented.');
   }
 }

@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab2Page } from './tab2.page';
 import { NgCalendarModule } from 'ionic2-calendar';
 import localeESMX from '@angular/common/locales/es-MX';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+// import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
 registerLocaleData(localeESMX);
 
@@ -21,7 +21,7 @@ registerLocaleData(localeESMX);
   declarations: [Tab2Page],
   providers: [
     { provide: LOCALE_ID, useValue: 'es-MX' },
-    LaunchNavigator
+    // LaunchNavigator
   ]
 })
 export class Tab2PageModule { }

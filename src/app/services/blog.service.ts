@@ -50,38 +50,52 @@ export class BlogService {
 
   private preguntas: any = [
     {
-      id: "",
-      texto: "¿Cual es tu deporte favorito?",
+      id: '',
+      texto: '¿Cual es tu deporte favorito?',
       opciones: [
         {
-          texto: "Futbol",
-          id: ""
+          texto: 'Futbol',
+          id: ''
         }, {
-          texto: "Basquetbol",
-          id: ""
+          texto: 'Basquetbol',
+          id: ''
         }, {
-          texto: "Tenis",
-          id: ""
+          texto: 'Tenis',
+          id: ''
         }
       ],
-      respuestaId: ""
+      respuestaId: ''
     },
     {
-      id: "",
-      texto: "¿Cual es tu deporte favorito?",
+      id: '',
+      texto: '¿Juegas videojuedos?',
       opciones: [
         {
-          texto: "Futbol",
-          id: ""
+          texto: 'Si',
+          id: ''
         }, {
-          texto: "Basquetbol",
-          id: ""
+          texto: 'No',
+          id: ''
         }, {
-          texto: "Tenis",
-          id: ""
+          texto: 'A veces',
+          id: ''
         }
       ],
-      respuestaId: ""
+      respuestaId: ''
+    },
+    {
+      id: '',
+      texto: '¿Eres estudiante?',
+      opciones: [
+        {
+          texto: 'Si',
+          id: ''
+        }, {
+          texto: 'No',
+          id: ''
+        }
+      ],
+      respuestaId: ''
     }
   ];
 
@@ -111,10 +125,10 @@ export class BlogService {
     });
   }
 
-  public get_Preguntas(){
+  public get_Preguntas() {
     return new Observable(observer => {
       setTimeout(() => {
-          observer.next(this.preguntas);
+        observer.next(this.preguntas);
       }, 1000);
     });
   }

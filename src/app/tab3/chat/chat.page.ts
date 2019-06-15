@@ -104,6 +104,7 @@ export class ChatPage implements OnInit {
   }
 
   getBackgroundUrl() {
+    // tslint:disable-next-line:quotemark
     return "url('/assets/images/bg-chat-3.jpg')";
   }
 

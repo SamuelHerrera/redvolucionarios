@@ -18,8 +18,7 @@ export class HomePage implements OnInit {
   constructor(
     private menuCtrl: MenuController,
     private auth: AuthService,
-    private modalSrv: ModalService,
-    private app: Tab3Page
+    private modalSrv: ModalService
   ) {
 
   }
@@ -29,7 +28,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.app.loadAll();
     this.auth.getUser().subscribe(user => {
       this.user = user;
       console.log(this.user);
@@ -47,6 +45,7 @@ export class HomePage implements OnInit {
   }
 
   getBackgroundUrl() {
+    // tslint:disable-next-line:quotemark
     return "url('/assets/images/bg-2.jpg')";
   }
 

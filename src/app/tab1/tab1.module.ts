@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { Tab5Component } from '../tab5/tab5.component';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
-import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+// import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
 
 @NgModule({
@@ -20,6 +20,6 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
     ])
   ],
   declarations: [Tab1Page, Tab5Component],
-  providers: [SocialSharing, LaunchNavigator]
+  providers: [SocialSharing]
 })
 export class Tab1PageModule { }

@@ -4,7 +4,7 @@ import { CalendarComponent } from 'ionic2-calendar/calendar';
 import { formatDate } from '@angular/common';
 import { BlogService } from '../services/blog.service';
 import { Contenido } from '../services/contenido.model';
-import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
+// import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator/ngx';
 
 @Component({
   selector: 'app-tab2',
@@ -26,7 +26,8 @@ export class Tab2Page implements OnInit {
 
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
-  constructor(private launchNavigator: LaunchNavigator, private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService) { }
+  // tslint:disable-next-line:max-line-length
+  constructor(private alertCtrl: AlertController, @Inject(LOCALE_ID) private locale: string, private blogService: BlogService) { }
 
   ngOnInit() {
     this.precargarDummies();
@@ -131,15 +132,19 @@ export class Tab2Page implements OnInit {
 
 
   openEventInMaps() {
-    let options: LaunchNavigatorOptions = {
-      start: 'Campeche, MX',
-      app: this.launchNavigator.APP.USER_SELECT
-    }
+    // const options: LaunchNavigatorOptions = {
+    //   start: 'Campeche, MX',
+    //   app: this.launchNavigator.APP.USER_SELECT
+    // };
 
-    this.launchNavigator.navigate('Campeche, MX', options)
-      .then(
-        success => console.log('Launched navigator'),
-        error => console.log('Error launching navigator', error)
-      );
+    // document.addEventListener('deviceready', function() {
+    //   this.launchNavigator.navigate('Campeche, MX', options)
+    //     .then(
+    //       success => console.log('Launched navigator'),
+    //       error => console.log('Error launching navigator', error)
+    //     );
+    // }, false);
+
+
   }
 }
