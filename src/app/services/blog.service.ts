@@ -22,30 +22,59 @@ export class BlogService {
       inicio: null,
       fin: null
     }, {
-      subtitle: '08 Jun 2019',
-      title: 'Asamblea Regional de la Red Jóvenes x México en Campeche',
-      image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19944490_867982273353997_7198108672596367740_o-1170x750.jpg',
+      subtitle: '18 Jun 2019',
+      title: 'Asamblea Regional de la Red Jóvenes x México en Monterrey',
+      image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19732035_865729386912619_5317404181002911255_n.jpg',
       // tslint:disable-next-line:max-line-length
-      content: 'Con rumbo a la XXII Asamblea Nacional de nuestro partido, realizamos nuestra última Asamblea Regional de la Red Jóvenes X México en el Estado',
-      url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-campeche/',
+      content: 'Gran Asamblea Regional de la Red Jóvenes x México en Monterrey, con la presencia de los Estados de Guanajuato, Nuevo León, Zacatecas, Coahuila, Querétaro, San Luis Potosí, Aguascalientes y Tamaulipas.',
+      url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-monterrey/',
       type: 'evento',
       confirmacionEvento: 0,
-      badges: ['jovenes', 'CDMX', 'campeche'],
+      badges: ['jovenes', 'Nuevo Leon', 'noreste'],
       inicio: new Date(),
       fin: null
-    }, {
-      subtitle: '08 Jun 2019',
+    }, 
+    
+    {
+      subtitle: '20 Jun 2019',
       title: 'Asamblea Regional de la Red Jóvenes x México en Puebla',
       image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19601231_862802193872005_6007233327893768533_n.jpg',
       // tslint:disable-next-line:max-line-length
-      content: 'En Puebla llevamos acabo nuestra Asamblea Regional, con la presencia de Tlaxcala, Morelos, CDMX, Guerrero y Puebla. Vamos a la XXII Asamblea',
+      content: 'En Puebla llevamos a cabo nuestra primera Asamblea Regional de la Red Jóvenes x México rumbo a la XXII Asamblea Nacional del PRI',
       url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-puebla/',
       type: 'noticia',
       confirmacionEvento: 0,
       badges: ['regional', 'asamblea'],
       inicio: null,
       fin: null
-    }
+    }, {
+      subtitle: '22 Jun 2019',
+      title: 'Asamblea Regional de la Red Jóvenes x México en el Edo. de México',
+      image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19554742_862238183928406_2766354078052194277_n-914x750.jpg',
+      // tslint:disable-next-line:max-line-length
+      content: 'Asamblea Regional en Estado de México, en la Red Jóvenes x México estamos trabajando sin descanso rumbo a la XXII Asamblea Nacional del PRI, gracias a los Jóvenes de Michoacán, Hidalgo y Edomex que participaron.',
+      url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-puebla/',
+      type: 'noticia',
+      confirmacionEvento: 0,
+      badges: ['regional', 'Edomex', 'asamblea'],
+      inicio: null,
+      fin: null
+    },
+    
+    {
+      subtitle: '22 Jun 2019',
+      title: 'Asamblea Regional de la Red Jóvenes x México en el Edo. de México',
+      image: 'http://redjovenesxmexico.com/wp-content/uploads/2017/07/19554742_862238183928406_2766354078052194277_n-914x750.jpg',
+      // tslint:disable-next-line:max-line-length
+      content: 'GrAsambleaan Asamblea Regional de la Red Jóvenes x México en Monterrey, con la presencia de los Estados de Guanajuato, Nuevo León, Zacatecas, Coahuila, Querétaro, San Luis Potosí, Aguascalientes y Tamaulipas.',
+      url: 'http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-el-edo-de-mexico',
+      //redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-el-edo-de-mexico/http://redjovenesxmexico.com/asamblea-regional-de-la-red-jovenes-x-mexico-en-monterrey/',
+      type: 'evento',
+      confirmacionEvento: 0,
+      badges: ['jovenes', 'Edomex', 'mexiquense'],
+      inicio: new Date(),
+      fin: null
+    }, 
   ];
 
   private preguntas: any = [
