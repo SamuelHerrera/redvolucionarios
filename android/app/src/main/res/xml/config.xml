@@ -17,9 +17,4 @@
     <param name="android-package" value="nl.xservices.plugins.SocialSharing"/>
   </feature>
 
-
-  <!-- <feature name="LaunchNavigator">
-    <param name="android-package" value="uk.co.workingedge.phonegap.plugin.LaunchNavigatorPlugin"/>
-  </feature> -->
-
   </widget>
